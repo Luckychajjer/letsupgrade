@@ -1,3 +1,4 @@
+#assisgnment day_3-1
 answer = int(input("what is the current altitude?\n"))
 if answer >= 10000:
     print("To land the plane, go around and bring the altitude below 5000ft.")
