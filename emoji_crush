@@ -1,0 +1,77 @@
+import random
+elements=['👺','🤑','🤢','🥶','👿']
+boardlist=[]
+for i in range(25):
+    boardlist.append(random.choice(elements))
+
+def printboard():
+    pos=0
+    pos1=0
+    for i in range(5):
+        for j in  range(5):
+            if i<2:
+                print(pos,end='   ')
+                pos+=1
+            else:
+                print(pos,end='  ')
+                pos+=1
+        print("")
+        for j in range(5):
+            print(boardlist[pos1],end='  ')
+            pos1+=1
+        print('')
+    return boardlist
+
+
+def change_position(old,new):
+    boardlist[old],boardlist[new] = boardlist[new],boardlist[old]
+    return boardlist
+
+def check_pattern(new):
+    #horizontal row
+    c1=[new-2,new-1,new]
+    c2=[new,new+1,new+2]
+    c3=[new-1,new,new+1]
+    horizontal_row=[[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24]]
+    horizontal_pattern = [c1,c2,c3]
+    valid_horizontal=[]
+    for hp in horizontal_pattern:
+        for hr in horizontal_row:
+            if all(item in hr for item in hp):
+                valid_horizontal.append(hp)
+    #vertical row
+    c4=[new-10,new-5,new]
+    c5=[new,new+5,new+10]
+    c6=[new-5,new,new+5]
+    vertical_row=[[0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24]]
+    vertical_pattern = [c4,c5,c6]
+    valid_vertical=[]
+    for vp in vertical_pattern:
+        for vr in vertical_row:
+            if all(item in vr for item in vp):
+                valid_vertical.append(vp)
+    valid_horizontal.extend(valid_vertical)
+    return valid_horizontal
+
+def checkmatch(new,boardlist):
+    valid_pattern = check_pattern(new)
+    ele = boardlist[new]
+    flag = 0
+    correct_pattern = []
+    for combo in valid_pattern:
+       if (boardlist[combo[0]]==boardlist[combo[1]]) and (boardlist[combo[1]]==boardlist[combo[2]]) and (boardlist[combo[0]]==boardlist[combo[2]]):
+        flag = 1
+        correct_pattern.append(combo)
+    if flag == 1:
+        print("match")
+        print(correct_pattern)
+    else:
+        print("no match")
+
+
+boardlist = printboard()
+old = int(input("enter old position--"))
+new = int(input("enter new position--"))
+boardlist=change_position(old,new)
+printboard()
+checkmatch(new,boardlist)
