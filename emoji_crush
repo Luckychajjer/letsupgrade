@@ -1,10 +1,5 @@
 import random
-elements=['👺','🤑','🤢','🥶','👿']
-boardlist=[]
-for i in range(25):
-    boardlist.append(random.choice(elements))
-
-def printboard():
+def printboard(boardlist):
     pos=0
     pos1=0
     for i in range(5):
@@ -20,7 +15,6 @@ def printboard():
             print(boardlist[pos1],end='  ')
             pos1+=1
         print('')
-    return boardlist
 
 
 def change_position(old,new):
@@ -62,16 +56,40 @@ def checkmatch(new,boardlist):
        if (boardlist[combo[0]]==boardlist[combo[1]]) and (boardlist[combo[1]]==boardlist[combo[2]]) and (boardlist[combo[0]]==boardlist[combo[2]]):
         flag = 1
         correct_pattern.append(combo)
+    
     if flag == 1:
         print("match")
         print(correct_pattern)
+        return correct_pattern[0]
+
+def remove_match(correct_pattern,boardlist):
+    for pos in correct_pattern:
+        boardlist[pos]=random.choice(elements)
+    return boardlist
+
+elements=['👺','🤑','🤢','🥶','👿']
+boardlist=[]
+flag = 'y'
+while flag == 'y':
+    points =0
+    elements=['👺','🤑','🤢','🥶','👿']
+    boardlist=[]
+    for i in range(25):
+        boardlist.append(random.choice(elements))
+    printboard(boardlist)
+    for i in range(5):
+        old = int(input("enter old position--"))
+        new = int(input("enter new position--"))
+        boardlist=change_position(old,new)
+        correct_pattern =checkmatch(new,boardlist)
+        boardlist = remove_match(correct_pattern,boardlist)    
+        printboard(boardlist)
+        points+=100
+        print(points)
+    flag=input("you win! \n do you want to play again-- ")
+    if flag == 'y':
+        continue
     else:
-        print("no match")
-
-
-boardlist = printboard()
-old = int(input("enter old position--"))
-new = int(input("enter new position--"))
-boardlist=change_position(old,new)
-printboard()
-checkmatch(new,boardlist)
+        break
+        
+# fill the blank  with new
