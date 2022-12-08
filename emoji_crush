@@ -67,8 +67,6 @@ def remove_match(correct_pattern,boardlist):
         boardlist[pos]=random.choice(elements)
     return boardlist
 
-elements=['👺','🤑','🤢','🥶','👿']
-boardlist=[]
 flag = 'y'
 while flag == 'y':
     points =0
