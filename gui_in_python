@@ -1,0 +1,81 @@
+import pyautogui,PIL,os,time
+
+os.chdir("C://Users//vicky//Pictures//Screenshots")
+pyautogui.hotkey('win')
+pyautogui.write("paint")
+time.sleep(1)
+pyautogui.hotkey('enter')
+
+try:
+    pyautogui.click('brush.png')
+except:
+    print('not found!!')
+
+
+pos = []
+time.sleep(1)
+i=1
+distance = 300
+change = 20
+pyautogui.moveTo(540,443)
+pyautogui.click()
+pos.append(pyautogui.position())
+while distance >20:
+    pyautogui.drag(distance, 0, duration=0.2)  # drag right.
+    distance -= change                 
+    pos.append("x"+str(i))   
+    pos[i] = pyautogui.position()    
+    i+=1
+
+    pyautogui.drag(0, distance, duration=0.2)  # drag down
+    pos.append("x"+str(i))   
+    pos[i] = pyautogui.position() 
+    i+=1
+
+    pyautogui.drag(-distance, 0, duration=0.2)  # drag left.
+    distance -= change
+    pos.append("x"+str(i))   
+    pos[i] = pyautogui.position()
+    i+=1
+
+    pyautogui.drag(0, -distance, duration=0.2)  # drag up.
+    pos.append("x"+str(i))   
+    pos[i] = pyautogui.position() 
+    i+=1
+prepos= pyautogui.position()
+
+
+try:
+    pyautogui.click('eraser.png')
+except:
+    print('not found!!')
+
+
+time.sleep(1)
+distance  = 20
+change = distance
+i=0
+delay = 0.4
+pyautogui.moveTo(prepos)
+while distance <=300:
+    i-=1
+    pyautogui.moveTo(pos[i])
+    pyautogui.drag(0, distance, duration=delay)  # drag up.
+    delay+= 0.1
+    distance+=change
+
+    i-=1
+    pyautogui.moveTo(pos[i])
+    pyautogui.drag(distance, 0, duration=delay)  # drag left.
+    delay+= 0.1
+    
+    i-=1
+    pyautogui.moveTo(pos[i])  
+    pyautogui.drag(0, -distance, duration=delay)  # drag down.
+    delay+= 0.1
+    distance+=change
+
+    i-=1
+    pyautogui.moveTo(pos[i])
+    pyautogui.drag(-distance, 0, duration=delay)  # drag right.
+    delay+= 0.1 
