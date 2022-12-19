@@ -1,6 +1,6 @@
 import pyautogui,PIL,os,time
 
-os.chdir("C://Users//vicky//Pictures//Screenshots")
+os.chdir("C://Users//xxx//Pictures//Screenshots") # replace xxx with user name or change the file path to where brush and eraser photo is kept for image matching
 pyautogui.hotkey('win')
 pyautogui.write("paint")
 time.sleep(1)
