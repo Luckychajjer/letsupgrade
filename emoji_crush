@@ -17,7 +17,7 @@ def printboard(boardlist):
         print('')
 
 
-def change_position(old,new):
+def change_position(old,new,boardlist):
     boardlist[old],boardlist[new] = boardlist[new],boardlist[old]
     return boardlist
 
@@ -49,21 +49,24 @@ def check_pattern(new):
 
 def checkmatch(new,boardlist):
     valid_pattern = check_pattern(new)
-    ele = boardlist[new]
-    flag = 0
+    match = 0
     correct_pattern = []
     for combo in valid_pattern:
        if (boardlist[combo[0]]==boardlist[combo[1]]) and (boardlist[combo[1]]==boardlist[combo[2]]) and (boardlist[combo[0]]==boardlist[combo[2]]):
-        flag = 1
+        match = 1
         correct_pattern.append(combo)
     
-    if flag == 1:
-        print("match")
-        print(correct_pattern)
+    if match == 1:
+        #print("match")
+        #print(correct_pattern)
         return correct_pattern[0]
+    else:
+       pass
 
 def remove_match(correct_pattern,boardlist):
     for pos in correct_pattern:
+        elements=['👺','🤑','🤢','🥶','👿']
+        elements.remove(boardlist[pos-1])
         boardlist[pos]=random.choice(elements)
     return boardlist
 
@@ -72,22 +75,49 @@ while flag == 'y':
     points =0
     elements=['👺','🤑','🤢','🥶','👿']
     boardlist=[]
+    chance = 0
+
     for i in range(25):
         boardlist.append(random.choice(elements))
+
+    for i in range(25):
+        correct_pattern = checkmatch(i,boardlist)
+        if correct_pattern == None:
+            continue
+        else:
+            boardlist = remove_match(correct_pattern,boardlist)    
     printboard(boardlist)
-    for i in range(5):
+
+    while chance < 5 :
         old = int(input("enter old position--"))
         new = int(input("enter new position--"))
-        boardlist=change_position(old,new)
-        correct_pattern =checkmatch(new,boardlist)
-        boardlist = remove_match(correct_pattern,boardlist)    
-        printboard(boardlist)
-        points+=100
-        print(points)
-    flag=input("you win! \n do you want to play again-- ")
+        if old <= 24 and new <= 24:
+            prevboard = boardlist
+            boardlist=change_position(old,new,boardlist)
+            correct_pattern =checkmatch(new,boardlist)   #also check for old position
+            if correct_pattern == None:
+                boardlist = prevboard
+                print("invalid move")
+                continue
+            else:        
+                boardlist = remove_match(correct_pattern,boardlist) 
+                #printboard(boardlist)
+                for i in range(25):
+                    correct_pattern = checkmatch(i,boardlist)
+                    if correct_pattern == None:
+                        continue
+                    else:
+                        boardlist = remove_match(correct_pattern,boardlist)
+                    
+                printboard(boardlist)
+                points+=100
+                print(points)
+                chance+=1
+        else:
+            print("enter valid position")
+
+    flag=input("you win! \n do you want to play again (y or n)-- ")
     if flag == 'y':
         continue
     else:
         break
-        
-# fill the blank  with new
