@@ -1,8 +1,0 @@
-#assisgnment day_3-1
-answer = int(input("what is the current altitude?\n"))
-if answer >= 10000:
-    print("To land the plane, go around and bring the altitude below 5000ft.")
-elif answer < 10000 and answer >=5000:
-    print("Prepare to land, by bring the plane to an altitude of 1000ft.") 
-else:
-    print(" YOU ARE TOO CLOSE TO GROUND.\n Land now or else you are gonna crash.")
