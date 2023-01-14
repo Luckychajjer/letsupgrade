@@ -1,8 +1,8 @@
 #longest common sequence 
-xyz = ["b","a","b","c","e"]
-abc = ["a","b","d","a","c","e"]
+xyz = ["a","a","b"]
+abc = ["a","a","a","a","a","b"]
 luc = []
-fullstr=[0 for i in range(len(xyz))]
+fullstr=[]
 for k in range(len(xyz)):
     x=0
     for i in range(k,len(xyz)):
@@ -11,6 +11,7 @@ for k in range(len(xyz)):
                 luc.append(xyz[i])
                 x= j
                 break
-    fullstr[k] =luc
-    luc=[]
+    fullstr.append(luc)
+    luc=[] #for all availabe seq match
+   # break #for longest match
 print(fullstr)
