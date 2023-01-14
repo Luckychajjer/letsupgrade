@@ -1,0 +1,16 @@
+#longest common sequence 
+xyz = ["b","a","b","c","e"]
+abc = ["a","b","d","a","c","e"]
+luc = []
+fullstr=[0 for i in range(len(xyz))]
+for k in range(len(xyz)):
+    x=0
+    for i in range(k,len(xyz)):
+        for j in range(x,len(abc)):
+            if xyz[i]== abc[j]:
+                luc.append(xyz[i])
+                x= j
+                break
+    fullstr[k] =luc
+    luc=[]
+print(fullstr)
